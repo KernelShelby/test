@@ -1,0 +1,569 @@
+/* ==========================================================================
+   Base Styles & Variables
+   ========================================================================== */
+:root {
+    --bg-dark: #07070b;
+    --text-light: #ffffff;
+    --text-muted: #8b8b99;
+    --accent-purple: #9d4edd;
+    --accent-blue: #4361ee;
+    
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-body: 'Outfit', sans-serif;
+    
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    
+    /* Bento Grid Colors */
+    --card-1-color: #ff5b5b;
+    --card-2-color: #00d2ff;
+    --card-3-color: #ffc837;
+    --card-4-color: #11998e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Hide default cursor on desktop */
+    cursor: none !important;
+}
+
+html.lenis, html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+/* ==========================================================================
+   Typography & Utilities
+   ========================================================================== */
+h1, h2, h3, h4, .loader-text, .logo {
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+}
+
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+}
+
+/* ==========================================================================
+   Custom Cursor
+   ========================================================================== */
+.cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background-color: var(--text-light);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 10000;
+    transition: width 0.3s, height 0.3s, background-color 0.3s;
+}
+
+.cursor-follower {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    transition: width 0.3s, height 0.3s, border-color 0.3s;
+}
+
+.cursor.hovering {
+    width: 60px;
+    height: 60px;
+    background-color: transparent;
+    border: 1px solid var(--text-light);
+    mix-blend-mode: difference;
+}
+
+.cursor-follower.hovering {
+    opacity: 0;
+}
+
+/* ==========================================================================
+   Loader
+   ========================================================================== */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--bg-dark);
+    z-index: 9000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.loader-text {
+    font-size: 3rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 2rem;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.loader-bar-wrap {
+    width: 200px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.loader-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--text-light);
+}
+
+/* ==========================================================================
+   Ambient Background (Blobs)
+   ========================================================================== */
+.ambient-gradient {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: -1;
+    opacity: 0.5;
+    animation: drift 20s infinite alternate ease-in-out;
+}
+
+.blob-1 {
+    top: -10%;
+    left: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(157,78,221,0.2) 0%, rgba(7,7,11,0) 70%);
+}
+
+.blob-2 {
+    bottom: -10%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(67,97,238,0.2) 0%, rgba(7,7,11,0) 70%);
+    animation-delay: -5s;
+}
+
+.blob-3 {
+    top: 40%;
+    left: 40%;
+    width: 40vw;
+    height: 40vw;
+    background: radial-gradient(circle, rgba(255,0,128,0.1) 0%, rgba(7,7,11,0) 70%);
+    animation-duration: 25s;
+}
+
+@keyframes drift {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(5%, 10%) scale(1.1); }
+    100% { transform: translate(-5%, -5%) scale(0.9); }
+}
+
+/* ==========================================================================
+   Navigation Layout
+   ========================================================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    mix-blend-mode: difference;
+}
+
+.logo {
+    font-size: 1.5rem;
+    letter-spacing: 0.1em;
+}
+
+.nav-links {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}
+
+.nav-link {
+    font-size: 1rem;
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background-color: var(--text-light);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-btn {
+    border: 1px solid var(--glass-border);
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: var(--text-light);
+    color: var(--bg-dark);
+}
+
+/* ==========================================================================
+   Hero Section Layout
+   ========================================================================== */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 5%;
+    position: relative;
+    padding-top: 100px;
+}
+
+.hero-container {
+    max-width: 1200px;
+}
+
+.hero-title {
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+}
+
+.hero-title .line {
+    overflow: hidden; /* For split text animation reveal */
+    padding-bottom: 0.1em; /* prevents font descenders from being cut off */
+}
+
+.hero-title .word {
+    display: inline-block;
+    transform: translateY(110%); /* Start position for GSAP */
+}
+
+.hero-subtitle {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    color: var(--text-muted);
+    max-width: 600px;
+    margin-bottom: 3rem;
+    opacity: 0; /* Star position for GSAP */
+}
+
+.hero-cta {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    opacity: 0; /* Start position for GSAP */
+}
+
+.btn {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--text-light);
+    color: var(--bg-dark);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    border: 1px solid var(--glass-border);
+    background: rgba(255,255,255,0.05);
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.arrow-icon {
+    transition: transform 0.3s ease;
+}
+
+.btn-primary:hover .arrow-icon {
+    transform: translateX(4px) translateY(-4px);
+}
+
+/* ==========================================================================
+   Bento Grid Section
+   ========================================================================== */
+.bento-section {
+    padding: 8rem 5%;
+    position: relative;
+}
+
+.section-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.section-header {
+    margin-bottom: 4rem;
+}
+
+.section-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 1rem;
+}
+
+.section-desc {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 400px;
+    gap: 1.5rem;
+}
+
+.bento-card {
+    position: relative;
+    overflow: hidden;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: translateY(50px);
+    opacity: 0; /* For GSAP reveal */
+}
+
+.bento-card:hover {
+    transform: translateY(-5px) !important; /* Override GSAP once loaded */
+}
+
+.card-content {
+    position: relative;
+    z-index: 2;
+}
+
+.card-content h3 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-content p {
+    color: var(--text-muted);
+}
+
+.card-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: scale(1.1);
+}
+
+.bento-card:hover .card-bg {
+    opacity: 0.15;
+    transform: scale(1);
+}
+
+/* Grid layout mapping */
+.card-1 { grid-column: span 8; }
+.card-2 { grid-column: span 4; }
+.card-3 { grid-column: span 5; }
+.card-4 { grid-column: span 7; }
+
+.card-1 .card-bg { background: linear-gradient(135deg, var(--card-1-color), transparent); }
+.card-2 .card-bg { background: linear-gradient(135deg, var(--card-2-color), transparent); }
+.card-3 .card-bg { background: linear-gradient(135deg, var(--card-3-color), transparent); }
+.card-4 .card-bg { background: linear-gradient(135deg, var(--card-4-color), transparent); }
+
+/* ==========================================================================
+   Marquee Section
+   ========================================================================== */
+.marquee-section {
+    padding: 4rem 0;
+    overflow: hidden;
+    background: var(--text-light);
+    color: var(--bg-dark);
+    transform: rotate(-2deg) scale(1.1);
+    margin: 4rem 0;
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: scroll 20s linear infinite;
+}
+
+.marquee-content {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    padding: 0 1.5rem;
+}
+
+.marquee-content span {
+    font-size: 4rem;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.marquee-content .dot {
+    font-size: 2rem;
+    color: var(--accent-purple);
+}
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* ==========================================================================
+   Footer Section
+   ========================================================================== */
+.footer {
+    padding: 5% 5% 2%;
+}
+
+.footer-container {
+    padding: 6rem 4rem 3rem;
+    border-radius: 40px;
+}
+
+.footer-top {
+    margin-bottom: 8rem;
+    text-align: center;
+}
+
+.footer-heading {
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+}
+
+.email-link {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    position: relative;
+    display: inline-block;
+}
+
+.line-hover {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: var(--text-light);
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.email-link:hover .line-hover {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    color: var(--text-muted);
+}
+
+.social-links {
+    display: flex;
+    gap: 2rem;
+}
+
+/* ==========================================================================
+   Responsive Queries
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .card-1 { grid-column: span 12; }
+    .card-2 { grid-column: span 12; }
+    .card-3 { grid-column: span 6; }
+    .card-4 { grid-column: span 6; }
+}
+
+@media (max-width: 768px) {
+    .nav-links { display: none; } /* Simplified for mobile demo */
+    .bento-grid { display: flex; flex-direction: column; }
+    .bento-card { height: 350px; }
+    .footer-container { padding: 4rem 2rem 2rem; }
+    .marquee-content span { font-size: 2.5rem; }
+    
+    /* Reveal default cursor on touch devices */
+    * { cursor: auto !important; }
+    .cursor, .cursor-follower { display: none; }
+}
